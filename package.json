@@ -10,7 +10,15 @@
     "start": "node --env-file=.env dist/main.js",
     "prod": "pnpm run build && node --env-file=.env dist/main.js"
   },
-  "keywords": ["opensky", "aviation", "ads-b", "flight-tracking", "api-client", "typescript", "oauth2"],
+  "keywords": [
+    "opensky",
+    "aviation",
+    "ads-b",
+    "flight-tracking",
+    "api-client",
+    "typescript",
+    "oauth2"
+  ],
   "author": "Pierre",
   "license": "MIT",
   "repository": {
@@ -21,7 +29,7 @@
     "url": "https://github.com/pierreraby/opensky-ts/issues"
   },
   "homepage": "https://github.com/pierreraby/opensky-ts#readme",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "@types/node": "^24.5.2",
     "typescript": "^5.9.2"
