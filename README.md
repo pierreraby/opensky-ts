@@ -1,45 +1,47 @@
 # OpenSky TypeScript Client 🛫
 
-Un client TypeScript moderne et robuste pour l'API OpenSky Network avec gestion automatique des tokens OAuth2 et retry intelligent.
+A modern and robust TypeScript client for the OpenSky Network API with automatic OAuth2 token management and intelligent retry logic.
 
-## ✨ Fonctionnalités
+> [🇫🇷 Version française](README.fr.md)
 
-- 🔐 **Authentification OAuth2** avec gestion automatique des tokens
-- 🔄 **Retry automatique** sur expiration de token (401)
-- 📝 **Types TypeScript** complets pour toutes les réponses API
-- 🌍 **API complète** - Implémente tous les endpoints OpenSky
-- 💾 **Cache de tokens** persistant sur disque
-- 🚀 **Top-level await** avec gestion d'erreur centralisée
+## ✨ Features
+
+- 🔐 **OAuth2 Authentication** with automatic token management
+- 🔄 **Automatic retry** on token expiration (401)
+- 📝 **Complete TypeScript types** for all API responses
+- 🌍 **Full API coverage** - Implements all OpenSky endpoints
+- 💾 **Persistent token cache** on disk
+- 🚀 **Top-level await** with centralized error handling
 
 ## 📦 Installation
 
 ```bash
-# Cloner le repository
-git clone <votre-repo>
+# Clone the repository
+git clone https://github.com/pierreraby/opensky-ts
 cd opensky-ts
 
-# Installer les dépendances
+# Install dependencies
 pnpm install
 
-# Configurer les credentials
+# Configure credentials
 cp .env.example .env
-# Éditer .env avec vos credentials OpenSky
+# Edit .env with your OpenSky credentials
 ```
 
 ## 🔑 Configuration
 
-1. Créez un compte sur [OpenSky Network](https://opensky-network.org/)
-2. Générez vos credentials API dans votre [compte OpenSky](https://opensky-network.org/my-opensky/account)
-3. Configurez le fichier `.env` :
+1. Create an account on [OpenSky Network](https://opensky-network.org/)
+2. Generate your API credentials in your [OpenSky account](https://opensky-network.org/my-opensky/account)
+3. Configure the `.env` file:
 
 ```bash
 OPENSKY_CLIENT_ID=votre_client_id
 OPENSKY_CLIENT_SECRET=votre_client_secret
 ```
 
-## 🚀 Utilisation
+## 🚀 Usage
 
-### Exemple basique
+### Basic Example
 
 ```typescript
 import { OpenSkyClient } from './opensky-api.js';
@@ -49,115 +51,114 @@ const client = new OpenSkyClient(
     process.env.OPENSKY_CLIENT_SECRET
 );
 
-// Récupérer les arrivées à un aéroport
+// Get arrivals at an airport
 const arrivals = await client.getArrivalsByAirport('EDDF', '1700000000', '1700086400');
-console.log(`${arrivals.length} arrivées trouvées`);
+console.log(`${arrivals.length} arrivals found`);
 ```
 
-### Exemple avec gestion d'erreur
+### Example with Error Handling
 
 ```typescript
 async function main() {
     const client = new OpenSkyClient(clientId, clientSecret);
     
     try {
-        // Le client gère automatiquement les tokens et les retry
+        // Client automatically handles tokens and retries
         const flights = await client.getFlightsInInterval(begin, end);
-        console.log(`${flights.length} vols trouvés`);
+        console.log(`${flights.length} flights found`);
     } catch (error) {
-        console.error('Erreur API:', error.message);
+        console.error('API Error:', error.message);
     }
 }
 
 await main().catch(console.error);
 ```
 
-## 📋 API Disponible
+## 📋 Available API
 
-### States (États des avions)
+### States (Aircraft States)
 
 ```typescript
-// Tous les états actuels avec filtres géographiques
+// All current states with geographic filters
 const states = await client.getAllStates({
     lamin: 45.0, lamax: 55.0,  // Latitude
     lomin: -5.0, lomax: 15.0,  // Longitude
     extended: true
 });
 
-// États de vos propres récepteurs
+// States from your own receivers
 const ownStates = await client.getOwnStates({
     serials: [123456, 789012]
 });
 ```
 
-### Flights (Vols)
+### Flights
 
 ```typescript
-// Vols dans un intervalle de temps
+// Flights in time interval
 const flights = await client.getFlightsInInterval(begin, end);
 
-// Vols d'un avion spécifique
+// Flights by specific aircraft
 const aircraftFlights = await client.getFlightsByAircraft('3c675a', begin, end);
 
-// Arrivées à un aéroport
+// Airport arrivals
 const arrivals = await client.getArrivalsByAirport('EDDF', begin, end);
 
-// Départs depuis un aéroport
+// Airport departures
 const departures = await client.getDeparturesByAirport('KJFK', begin, end);
 ```
 
-### Tracks (Trajectoires)
+### Tracks
 
 ```typescript
-// Trajectoire d'un avion
+// Aircraft trajectory
 const track = await client.getTrackByAircraft('3c675a', timestamp);
 ```
 
-## 🎯 Exemples d'utilisation
+## 🎯 Usage Examples
 
-### Script simple - Arrivées Frankfurt
+### Simple Script - Frankfurt Arrivals
 
 ```bash
 pnpm start
 ```
 
-### Démonstration complète
+### Complete Demonstration
 
 ```bash
 node --env-file=.env dist/example.js
 ```
 
-## 🏗️ Structure du projet
+## 🏗️ Project Structure
 
 ```
 opensky-ts/
-├── opensky-api.ts       # Client principal avec toutes les méthodes
-├── main.ts             # Exemple simple (arrivées EDDF)
-├── example.ts          # Démonstration complète de l'API
-├── api-doc.rst         # Documentation officielle OpenSky
-├── package.json        # Configuration du projet
-└── tsconfig.json       # Configuration TypeScript
+├── opensky-api.ts       # Main client with all methods
+├── main.ts             # Simple example (EDDF arrivals)
+├── example.ts          # Complete API demonstration
+├── package.json        # Project configuration
+└── tsconfig.json       # TypeScript configuration
 ```
 
-## 🔧 Scripts disponibles
+## 🔧 Available Scripts
 
 ```bash
-# Développement avec watch
+# Development with watch mode
 pnpm run dev
 
-# Build production
+# Production build
 pnpm run build
 
-# Exécuter l'exemple principal
+# Run main example
 pnpm start
 
-# Build + run en une commande
+# Build + run in one command
 pnpm run prod
 ```
 
-## 📊 Types TypeScript
+## 📊 TypeScript Types
 
-Le client fournit des types complets pour toutes les réponses :
+The client provides complete types for all responses:
 
 ```typescript
 interface StateVector {
@@ -166,7 +167,7 @@ interface StateVector {
     origin_country: string;
     latitude: number | null;
     longitude: number | null;
-    // ... autres propriétés
+    // ... other properties
 }
 
 interface Flight {
@@ -175,13 +176,13 @@ interface Flight {
     estDepartureAirport: string | null;
     estArrivalAirport: string | null;
     callsign: string | null;
-    // ... autres propriétés
+    // ... other properties
 }
 ```
 
-## 🌍 Zones géographiques recommandées
+## 🌍 Recommended Geographic Areas
 
-### Europe Occidentale
+### Western Europe
 ```typescript
 const states = await client.getAllStates({
     lamin: 45.0, lamax: 55.0,
@@ -189,7 +190,7 @@ const states = await client.getAllStates({
 });
 ```
 
-### USA Côte Est (plus d'activité)
+### USA East Coast (more activity)
 ```typescript
 const states = await client.getAllStates({
     lamin: 35.0, lamax: 45.0,
@@ -197,64 +198,64 @@ const states = await client.getAllStates({
 });
 ```
 
-## ⚠️ Limitations API
+## ⚠️ API Limitations
 
-- **Utilisateurs anonymes** : 400 crédits/jour, données temps réel uniquement
-- **Utilisateurs authentifiés** : 4000 crédits/jour, historique 1h
-- **Contributeurs actifs** : 8000 crédits/jour, historique étendu
-- **Données arrivées/départs** : Mises à jour par batch process (données du jour précédent)
+- **Anonymous users**: 400 credits/day, real-time data only
+- **Authenticated users**: 4000 credits/day, 1h history
+- **Active contributors**: 8000 credits/day, extended history
+- **Arrivals/departures data**: Updated by batch process (previous day data)
 
-## 🔄 Gestion automatique des tokens
+## 🔄 Automatic Token Management
 
-Le client gère automatiquement :
-- 🔐 Récupération initiale du token OAuth2
-- 💾 Sauvegarde persistante sur disque (`.access_token`)
-- 🔄 Détection d'expiration (erreur 401)
-- ⚡ Refresh automatique et retry transparent
-- 📝 Logging informatif du processus
+The client automatically handles:
+- 🔐 Initial OAuth2 token retrieval
+- 💾 Persistent disk storage (`.access_token`)
+- 🔄 Expiration detection (401 errors)
+- ⚡ Automatic refresh and transparent retry
+- 📝 Informative process logging
 
-## 🐛 Gestion d'erreur
+## 🐛 Error Handling
 
 ```typescript
 try {
     const data = await client.getAllStates();
 } catch (error) {
     if (error.message.includes('401')) {
-        // Token expiré - géré automatiquement
+        // Token expired - handled automatically
     } else if (error.message.includes('429')) {
-        // Limite de taux atteinte
+        // Rate limit reached
     } else if (error.message.includes('404')) {
-        // Données non disponibles pour cette période
+        // Data not available for this period
     }
 }
 ```
 
-## 📈 Exemples de résultats
+## 📈 Example Results
 
 ```bash
-📡 États d'avions sur côte Est USA: 1646 avions détectés
-✈️  Vols dernières 2h: 242 vols trouvés
-🛬 Arrivées JFK hier: 91 arrivées
-🛫 Départs JFK hier: 36 départs
+📡 Aircraft states on USA East Coast: 1646 aircraft detected
+✈️  Flights last 2h: 242 flights found
+🛬 JFK arrivals yesterday: 91 arrivals
+🛫 JFK departures yesterday: 36 departures
 ```
 
-## 🤝 Contribution
+## 🤝 Contributing
 
-Les contributions sont les bienvenues ! N'hésitez pas à :
-- Ouvrir une issue pour signaler un bug
-- Proposer des améliorations
-- Soumettre une pull request
+Contributions are welcome! Feel free to:
+- Open an issue to report a bug
+- Suggest improvements
+- Submit a pull request
 
-## 📄 Licence
+## 📄 License
 
-MIT License - Voir le fichier [LICENSE](LICENSE) pour plus de détails.
+MIT License - See the [LICENSE](LICENSE) file for details.
 
-## 🔗 Liens utiles
+## 🔗 Useful Links
 
 - [OpenSky Network](https://opensky-network.org/)
-- [Documentation API OpenSky](https://opensky-network.org/apidoc/)
-- [Créer un compte API](https://opensky-network.org/my-opensky/account)
+- [OpenSky API Documentation](https://opensky-network.org/apidoc/)
+- [Create API Account](https://opensky-network.org/my-opensky/account)
 
 ---
 
-**Fait avec ❤️ et TypeScript**
+**Made with ❤️ and TypeScript**
