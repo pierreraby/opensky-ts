@@ -1,0 +1,29 @@
+{
+  "name": "opensky-ts",
+  "version": "1.0.0",
+  "description": "Modern TypeScript client for OpenSky Network API with automatic OAuth2 token management",
+  "main": "dist/opensky-api.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsc --watch --outDir dist",
+    "build": "tsc --outDir dist",
+    "start": "node --env-file=.env dist/main.js",
+    "prod": "pnpm run build && node --env-file=.env dist/main.js"
+  },
+  "keywords": ["opensky", "aviation", "ads-b", "flight-tracking", "api-client", "typescript", "oauth2"],
+  "author": "Pierre",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pierreraby/opensky-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/pierreraby/opensky-ts/issues"
+  },
+  "homepage": "https://github.com/pierreraby/opensky-ts#readme",
+  "packageManager": "pnpm@10.14.0",
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.9.2"
+  }
+}
